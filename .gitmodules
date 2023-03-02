@@ -1,0 +1,5 @@
+[submodule "backend/lib/forge-std"]
+	path = backend/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
+[submodule "lib/forge-std"]
+	branch = v1.5.0
