@@ -1,4 +1,7 @@
-//SPDX-License-Identifier: MIT
+//SPDX-License-Identifier: GPL-3.0-only
+
+// this contract was hacked by malteish.eth during ethDenver2023
+
 pragma solidity 0.8.19;
 import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
@@ -29,9 +32,13 @@ contract Goerlinator is Pausable, ReentrancyGuard, Ownable {
             eligibleAddresses[_address] == true,
             "Address not eligible to claim"
         );
+        require(
+            address(this).balance >= claimAmount,
+            "Contract balance is too low"
+        );
         eligibleAddresses[_address] = false;
-        payable(_address).transfer(1 ether);
-        emit Claimed(_address, 1 ether);
+        payable(_address).transfer(claimAmount);
+        emit Claimed(_address, claimAmount);
     }
 
     /**
@@ -42,6 +49,17 @@ contract Goerlinator is Pausable, ReentrancyGuard, Ownable {
     ) public onlyOwner {
         for (uint256 i = 0; i < _addresses.length; i++) {
             eligibleAddresses[_addresses[i]] = true;
+        }
+    }
+
+    /**
+     * @dev Make addresses not eligible
+     */
+    function makeAddressesNotEligible(
+        address[] memory _addresses
+    ) public onlyOwner {
+        for (uint256 i = 0; i < _addresses.length; i++) {
+            eligibleAddresses[_addresses[i]] = false;
         }
     }
 
@@ -58,6 +76,20 @@ contract Goerlinator is Pausable, ReentrancyGuard, Ownable {
      */
     function withdraw() public onlyOwner {
         payable(msg.sender).transfer(address(this).balance);
+    }
+
+    /**
+     * @dev disables claiming
+     */
+    function pause() public onlyOwner {
+        _pause();
+    }
+
+    /**
+     * @dev enables claiming
+     */
+    function unpause() public onlyOwner {
+        _unpause();
     }
 
     /**

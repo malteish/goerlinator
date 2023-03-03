@@ -102,53 +102,123 @@ contract GoerlinatorTest is Test {
         );
     }
 
-    // function testFailNotOwnerRemove(address x) public {
-    //     vm.assume(x != owner);
-    //     vm.prank(address(x));
-    //     vm.expectRevert();
-    //     goerlinator.withdraw(address(0));
-    // }
+    function testPauseAndUnpause() public {
+        vm.prank(owner);
+        goerlinator.pause();
+        vm.prank(eligibleAddress1);
+        vm.expectRevert("Pausable: paused");
+        goerlinator.claimFor(eligibleAddress1);
 
-    // function testSet() public {
-    //     assertTrue(goerlinator.map(address(0)) == 0);
-    //     goerlinator.set(address(0), 1);
-    //     assertTrue(goerlinator.map(address(0)) == 1);
-    // }
+        vm.prank(owner);
+        goerlinator.unpause();
+        vm.prank(eligibleAddress1);
+        uint balanceBefore = address(eligibleAddress1).balance;
+        goerlinator.claimFor(eligibleAddress1);
+        assertEq(
+            address(eligibleAddress1).balance,
+            balanceBefore + claimAmount,
+            "Address balance should increase by claim amount"
+        );
+    }
 
-    // function testSet2() public {
-    //     assertTrue(goerlinator.map(address(1)) == 0);
-    //     goerlinator.set(address(1), 2);
-    //     assertTrue(goerlinator.map(address(1)) == 2);
-    // }
+    function testMakeAddressesEligible(
+        address _address1,
+        address _address2
+    ) public {
+        vm.assume(goerlinator.eligibleAddresses(_address1) == false);
+        vm.assume(goerlinator.eligibleAddresses(_address2) == false);
+        address[] memory newAddresses = new address[](2);
+        newAddresses[0] = _address1;
+        newAddresses[1] = _address2;
+        vm.prank(owner);
+        goerlinator.makeAddressesEligible(newAddresses);
+        assertEq(
+            goerlinator.eligibleAddresses(eligibleAddress1),
+            true,
+            "Address 1 should be eligible"
+        );
+        assertEq(
+            goerlinator.eligibleAddresses(eligibleAddress2),
+            true,
+            "Address 2 should be eligible"
+        );
+    }
 
-    // function testSetFuzzingAddress(address x) public {
-    //     assertTrue(goerlinator.map(address(x)) == 0);
-    //     goerlinator.set(address(x), 1);
-    //     assertTrue(goerlinator.map(address(x)) == 1);
-    // }
+    function testMakeAddressesEligibleWithEmptyArray() public {
+        address[] memory newAddresses = new address[](0);
+        vm.prank(owner);
+        goerlinator.makeAddressesEligible(newAddresses);
+        assertEq(
+            goerlinator.eligibleAddresses(eligibleAddress1),
+            true,
+            "Address 1 should still be eligible"
+        );
+        assertEq(
+            goerlinator.eligibleAddresses(eligibleAddress2),
+            true,
+            "Address 2 should still be eligible"
+        );
+    }
 
-    // function testSetFuzzingValue(uint256 x) public {
-    //     assertTrue(goerlinator.map(address(0)) == 0);
-    //     goerlinator.set(address(0), x);
-    //     assertTrue(goerlinator.map(address(0)) == x);
-    // }
+    function testMakeAddressesNotEligible(address _address) public {
+        vm.assume(goerlinator.eligibleAddresses(eligibleAddress1) == true);
+        vm.assume(goerlinator.eligibleAddresses(_address) == false);
+        address[] memory newAddresses = new address[](2);
+        newAddresses[0] = eligibleAddress1;
+        newAddresses[1] = _address;
+        vm.prank(owner);
+        goerlinator.makeAddressesNotEligible(newAddresses);
+        assertEq(
+            goerlinator.eligibleAddresses(eligibleAddress1),
+            false,
+            "Address 1 should not be eligible"
+        );
+        assertEq(
+            goerlinator.eligibleAddresses(_address),
+            false,
+            "Address x should not be eligible"
+        );
+    }
 
-    // function testRemove(address x) public {
-    //     if (x == address(0)) return;
-    //     assertTrue(goerlinator.map(address(0)) == 0);
-    //     goerlinator.set(address(0), 1);
-    //     assertTrue(goerlinator.map(address(0)) == 1);
+    function testClaimWhenNotFunded() public {
+        vm.prank(owner);
+        goerlinator.withdraw();
+        assertEq(
+            address(goerlinator).balance,
+            0,
+            "Contract balance should be 0"
+        );
+        uint balanceBefore = address(eligibleAddress1).balance;
+        vm.expectRevert("Contract balance is too low");
+        goerlinator.claimFor(eligibleAddress1);
+        assertEq(
+            address(eligibleAddress1).balance,
+            balanceBefore,
+            "Address balance should not change"
+        );
+    }
 
-    //     assertTrue(goerlinator.map(x) == 0);
-    //     goerlinator.set(x, 1);
-    //     assertTrue(goerlinator.map(x) == 1);
-
-    //     goerlinator.remove(address(0));
-    //     assertTrue(goerlinator.map(address(0)) == 0);
-    //     assertTrue(goerlinator.map(x) == 1);
-
-    //     goerlinator.remove(x);
-    //     assertTrue(goerlinator.map(address(0)) == 0);
-    //     assertTrue(goerlinator.map(x) == 0);
-    // }
+    function testSetClaimAmount(uint256 _newClaimAmount) public {
+        vm.assume(_newClaimAmount > 0);
+        vm.assume(_newClaimAmount != goerlinator.claimAmount());
+        vm.assume(_newClaimAmount < 100 ether);
+        uint oldClaimAmount = goerlinator.claimAmount();
+        vm.prank(owner);
+        goerlinator.setClaimAmount(_newClaimAmount);
+        assertEq(
+            goerlinator.claimAmount(),
+            _newClaimAmount,
+            "Claim amount should be updated"
+        );
+        // test if new claim amount works
+        console.log(eligibleAddress1.balance);
+        uint balanceBefore = address(eligibleAddress1).balance;
+        goerlinator.claimFor(eligibleAddress1);
+        console.log(address(eligibleAddress1).balance);
+        assertEq(
+            address(eligibleAddress1).balance,
+            balanceBefore + _newClaimAmount,
+            "Address balance should increase by new claim amount"
+        );
+    }
 }
