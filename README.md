@@ -4,11 +4,12 @@ We will goerlinate you!
 
 ## How to get started locally
 
-1. clone this repo
-2. run `npm install`
-3. `cd frontend`
-4. `npm run dev`
-5. go to `localhost:3000` in your browser
+- clone this repo
+- `git submodule update --init --recursive`
+- `npm install`
+- `cd frontend`
+- `npm run dev`
+- go to `localhost:3000` in your browser
 
 ## Deploying the smart contract
 
