@@ -1,12 +1,17 @@
 //SPDX-License-Identifier: GPL-3.0-only
 
-// this contract was hacked by malteish.eth during ethDenver2023
-
 pragma solidity 0.8.19;
 import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
+/**
+ * @title Goerlinator
+ * @dev A contract to claim goerli eth, helping whales to distribute and devs to test.
+ * @author malteish.eth
+ * @notice hacked during ethDenver2023 hackathon
+ * @custom:repository https://github.com/malteish/goerlinator
+ */
 contract Goerlinator is Pausable, ReentrancyGuard, Ownable {
     mapping(address => bool) public eligibleAddresses;
 
@@ -42,7 +47,7 @@ contract Goerlinator is Pausable, ReentrancyGuard, Ownable {
     }
 
     /**
-     * @dev Add eligible addresses.
+     * @dev Make addresses eligible to claim.
      */
     function makeAddressesEligible(
         address[] memory _addresses
