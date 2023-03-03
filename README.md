@@ -2,6 +2,11 @@
 
 We will goerlinate you!
 
+## When was the snapshot taken?
+
+At block [26720000](https://gnosisscan.io/block/26720000) on the gnosis chain (where most poaps live).
+All addresses that were the receiver of a poap transaction before or in this block are eligible for the airdrop.
+
 ## How to get started locally
 
 - clone this repo
