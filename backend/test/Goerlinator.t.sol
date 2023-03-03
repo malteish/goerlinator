@@ -202,7 +202,6 @@ contract GoerlinatorTest is Test {
         vm.assume(_newClaimAmount > 0);
         vm.assume(_newClaimAmount != goerlinator.claimAmount());
         vm.assume(_newClaimAmount < 100 ether);
-        uint oldClaimAmount = goerlinator.claimAmount();
         vm.prank(owner);
         goerlinator.setClaimAmount(_newClaimAmount);
         assertEq(
