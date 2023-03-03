@@ -62,15 +62,16 @@ contract GoerlinatorTest is Test {
         );
     }
 
-    function testClaimWhenEligible() public {
+    function testClaimForEligibleAddress(address _address) public {
+        vm.assume(goerlinator.eligibleAddresses(_address) == false);
         uint balanceBefore = address(eligibleAddress1).balance;
         assertEq(
             goerlinator.eligibleAddresses(eligibleAddress1),
             true,
             "Address should be eligible"
         );
-        vm.prank(address(eligibleAddress1));
-        goerlinator.claim();
+        vm.prank(_address);
+        goerlinator.claimFor(eligibleAddress1);
         assertEq(
             address(eligibleAddress1).balance,
             balanceBefore + claimAmount,
@@ -83,25 +84,21 @@ contract GoerlinatorTest is Test {
         );
     }
 
-    function testClaimForEligibleAddress(address x) public {
-        vm.assume(goerlinator.eligibleAddresses(x) == false);
-        uint balanceBefore = address(eligibleAddress1).balance;
+    function testClaimForNotEligibleAddress(address _address) public {
+        vm.assume(goerlinator.eligibleAddresses(_address) == false);
+        uint balanceBefore = address(_address).balance;
+        vm.prank(address(_address));
+        vm.expectRevert("Address not eligible to claim");
+        goerlinator.claimFor(_address);
         assertEq(
-            goerlinator.eligibleAddresses(eligibleAddress1),
-            true,
-            "Address should be eligible"
-        );
-        vm.prank(x);
-        goerlinator.claimFor(eligibleAddress1);
-        assertEq(
-            address(eligibleAddress1).balance,
-            balanceBefore + claimAmount,
-            "Address balance should increase by claim amount"
+            address(_address).balance,
+            balanceBefore,
+            "Address balance should not change"
         );
         assertEq(
-            goerlinator.eligibleAddresses(eligibleAddress1),
+            goerlinator.eligibleAddresses(_address),
             false,
-            "Address should not be eligible after claiming"
+            "Address should still not be eligible after claiming"
         );
     }
 

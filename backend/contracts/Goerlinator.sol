@@ -21,13 +21,6 @@ contract Goerlinator is Pausable, ReentrancyGuard, Ownable {
     }
 
     /**
-     * @dev Claim goerli eth if you are eligible. Eligibility is nullified after claiming.
-     */
-    function claim() public whenNotPaused {
-        claimFor(msg.sender);
-    }
-
-    /**
      * @dev Claim goerli eth for someone else if that address is eligible.
      * Eligibility is nullified after claiming.
      */
