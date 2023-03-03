@@ -3,7 +3,7 @@ require("@nomicfoundation/hardhat-foundry");
 require('dotenv').config()
 
 module.exports = {
-	solidity: "0.8.9",
+	solidity: "0.8.19",
 	networks: {
 		hardhat: {},
 		ETH_MAINNET: {
