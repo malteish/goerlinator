@@ -2,3 +2,5 @@
 /node_modules
 out
 cache_forge
+artifacts
+cache

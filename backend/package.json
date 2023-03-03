@@ -11,7 +11,8 @@
 	},
 	"dependencies": {
 		"@openzeppelin/contracts": "^4.7.3",
-		"dotenv": "^16.0.2"
+		"dotenv": "^16.0.2",
+		"solc": "^0.8.19"
 	},
 	"devDependencies": {
 		"@nomicfoundation/hardhat-foundry": "^1.0.0",
