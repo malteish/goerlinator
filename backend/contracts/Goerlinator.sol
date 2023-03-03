@@ -30,7 +30,8 @@ contract Goerlinator is Pausable, ReentrancyGuard, Ownable {
 
     /**
      * @dev Claim goerli eth for someone else if that address is eligible.
-     * Eligibility is nullified after claiming.
+     * @dev Allows for gasless claiming through 3rd parties.
+     * @notice Eligibility is nullified after claiming.
      */
     function claimFor(address _address) public nonReentrant whenNotPaused {
         require(
