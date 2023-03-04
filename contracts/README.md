@@ -37,6 +37,10 @@ _Ideally use the UI for collection, but if you'd like to use cmd, run the comman
 
 There are two optional cmd flags: `graffiti` / `recipient`
 
+## Deploy (using local private key)
+
+`npx ts-node scripts/deploy-goerlinator.ts --network=goerli --amount="50.0" --leaves_file=data/poapHoldersBefore2023-03-01.csv`
+
 ## Dev workflow (UI testing)
 
 1. Set up environment variable for `DEV_WALLETS` (comma separated list of public keys)
