@@ -23,7 +23,7 @@ contract Goerlinator is Pausable, ReentrancyGuard, Ownable {
     /**
      * @dev Initializes the contract, setting the owner.
      */
-    constructor(uint256 _claimAmount) Ownable() {
+    constructor(uint256 _claimAmount) {
         claimAmount = _claimAmount;
         emit ClaimAmountUpdated(_claimAmount);
     }
@@ -51,7 +51,7 @@ contract Goerlinator is Pausable, ReentrancyGuard, Ownable {
      * @dev Make addresses eligible to claim.
      */
     function makeAddressesEligible(
-        address[] memory _addresses
+        address[] calldata _addresses
     ) public onlyOwner {
         for (uint256 i = 0; i < _addresses.length; i++) {
             eligibleAddresses[_addresses[i]] = true;
