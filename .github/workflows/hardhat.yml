@@ -7,11 +7,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: Install packages
-        working-directory: ./contracts
-        uses: actions/setup-node@v3
-        # with:
-        #   node-version: "18.x"
+      # - name: Install packages
+      #   working-directory: ./contracts
+      #   uses: actions/setup-node@v3
+      # with:
+      #   node-version: "18.x"
       - run: yarn --ignore-scripts
         working-directory: ./contracts
         shell: bash
