@@ -26,7 +26,14 @@ contract SetEligibleAddresses is Script {
             payable(0xdbC24a8F7bb96c546F854829959D97852446Ec58)
         );
 
-        uint numberOfAddressesPerStep = 111111;
+        console.log("goerlinator address: ", address(goerlinator));
+        console.log("goerlinator balance: ", address(goerlinator).balance);
+        console.log("goerlinator owner: ", goerlinator.owner());
+
+        // vm.broadcast(deployerPrivateKey);
+        // Goerlinator goerlinator = new Goerlinator(1 ether);
+
+        uint numberOfAddressesPerStep = 10000; //111111;
         uint numberOfSteps = totalNumberOfAddresses / numberOfAddressesPerStep;
         uint numberOfAddressesInLastStep = totalNumberOfAddresses %
             numberOfAddressesPerStep;
@@ -79,7 +86,8 @@ contract SetEligibleAddresses is Script {
         //uint gasBefore = gasleft();
         vm.broadcast(deployerPrivateKey);
         goerlinator.makeAddressesEligible(addresses);
-        vm.stopBroadcast();
+
+        /*
         //uint gasAfter = gasleft();
         require(
             goerlinator.eligibleAddresses(addresses[0]) == true,
@@ -97,5 +105,6 @@ contract SetEligibleAddresses is Script {
         //     ((gasBefore - gasAfter) * 1e9) / 1e18,
         //     " ETH"
         // );
+        */
     }
 }
