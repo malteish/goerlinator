@@ -1,0 +1,25 @@
+# name: hardhat-tests
+# on: [push, workflow_dispatch]
+
+# jobs:
+#   tests:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - uses: actions/checkout@v3
+#       # - name: Install packages
+#       #   working-directory: ./contracts
+#       #   uses: actions/setup-node@v3
+#       # with:
+#       #   node-version: "18.x"
+#       - run: yarn --ignore-scripts
+#         working-directory: ./contracts
+#         shell: bash
+#       # - name: Create local node and deploy
+#       #   working-directory: ./contracts
+#       #   run: |
+#       #     yarn hardhat node &
+#       #     yarn hardhat run scripts/deploy.ts --network localhost
+#       - name: Run Tests
+#         working-directory: ./contracts
+#         run: yarn hardhat test
