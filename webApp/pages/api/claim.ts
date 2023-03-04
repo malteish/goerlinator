@@ -1,4 +1,4 @@
-import { utils } from "ethers";
+import { utils, Wallet, providers } from "ethers";
 
 export default function handler(req, res) {
   // Get data submitted in request's body.
@@ -20,6 +20,24 @@ export default function handler(req, res) {
       .status(400)
       .json({ data: `${body.address} is not a valid ethereum address` });
   }
+
+  // send funds to address
+  if (
+    process.env.PRIVATE_KEY === undefined ||
+    process.env.RPC_URL === undefined
+  ) {
+    return res.status(500).json({ data: "No relayer provided" });
+  }
+  let provider = new providers.JsonRpcProvider(process.env.RPC_URL);
+  let relayer = new Wallet(process.env.PRIVATE_KEY, provider);
+  let tx = {
+    to: body.address,
+    value: utils.parseEther("0.33"),
+  };
+
+  relayer.sendTransaction(tx).then((txObj) => {
+    console.log("txHash: ", txObj.hash);
+  });
 
   // Found the name.
   // Sends a HTTP success code

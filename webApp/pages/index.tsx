@@ -29,7 +29,7 @@ const Home: NextPage = () => {
         <h1 className={styles.title}>The Goerlinator</h1>
         {/* <ConnectButton /> */}
 
-        <form action="/api/form" method="post">
+        <form action="/api/claim" method="post">
           <label for="address">address</label>
           <input type="text" id="address" name="address" />
           <button type="submit">Submit</button>
