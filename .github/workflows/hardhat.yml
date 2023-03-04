@@ -1,9 +1,5 @@
-name: CI
-on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+name: hardhat-tests
+on: [push, workflow_dispatch]
 
 jobs:
   tests:
