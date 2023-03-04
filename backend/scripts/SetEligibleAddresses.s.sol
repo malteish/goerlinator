@@ -13,7 +13,7 @@ contract DeployGoerlinator is Script {
         uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
         address deployerAddress = vm.addr(deployerPrivateKey);
 
-        uint maxLines = 100000;
+        uint maxLines = 101000;
 
         console.log("Deployer address: ", deployerAddress);
 
@@ -33,7 +33,19 @@ contract DeployGoerlinator is Script {
 
         Goerlinator goerlinator = new Goerlinator(1 ether);
         // set eligible addresses
+        uint gasBefore = gasleft();
         goerlinator.makeAddressesEligible(addresses);
+        uint gasAfter = gasleft();
+        console.log("gas used: ", gasBefore - gasAfter);
+        console.log(
+            "gas used per address: ",
+            (gasBefore - gasAfter) / maxLines
+        );
+        console.log(
+            "estimated total cost at 1 gwei/gas: ",
+            ((gasBefore - gasAfter) * 1e9) / 1e18,
+            " ETH"
+        );
 
         // test that the addresses are eligible
         if (goerlinator.eligibleAddresses(addresses[0]) == true) {
