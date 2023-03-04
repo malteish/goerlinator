@@ -102,6 +102,17 @@ contract GoerlinatorTest is Test {
         );
     }
 
+    function testAddressesAreNotEligibleByDefault(address _address) public {
+        Goerlinator goerlinatorLocal = new Goerlinator(claimAmount);
+        assertEq(
+            goerlinatorLocal.eligibleAddresses(_address),
+            false,
+            "Address should not be eligible"
+        );
+        vm.expectRevert("Address not eligible to claim");
+        goerlinatorLocal.claimFor(_address);
+    }
+
     function testPauseAndUnpause() public {
         vm.prank(owner);
         goerlinator.pause();
