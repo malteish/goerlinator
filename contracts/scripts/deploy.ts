@@ -48,7 +48,7 @@ export async function deploy() {
     sortPairs: true,
   });
   let root = merkleTree.getHexRoot();
-  console.log("Validating merkle tree..."")
+  console.log("Validating merkle tree...");
   // merkle tree sanity check
   var validAddress = "0xDFcEB49eD21aE199b33A76B726E2bea7A72127B0";
   console.log(`Merkle root: ${root}`);
