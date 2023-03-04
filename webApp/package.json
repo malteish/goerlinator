@@ -10,7 +10,10 @@
   },
   "dependencies": {
     "@rainbow-me/rainbowkit": "^0.11.1",
+    "defender-relay-client": "^1.39.0",
     "ethers": "^5.0.0",
+    "keccak256": "^1.0.6",
+    "merkletreejs": "^0.3.9",
     "next": "^12.1.6",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
