@@ -6,50 +6,96 @@ pragma solidity 0.8.19;
 import "../lib/forge-std/src/Script.sol";
 import "../contracts/Goerlinator.sol";
 
-contract DeployGoerlinator is Script {
+contract SetEligibleAddresses is Script {
     function setUp() public {}
 
     function run() public {
+        /*
+         * these 2 variables need to be set manually
+         */
+        // count addresses in file using `wc -l <address_file>`, and paste result here
+        uint totalNumberOfAddresses = 1106356;
+        // set step to the number of the step you want to execute
+        uint step = 0;
+
         uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
         address deployerAddress = vm.addr(deployerPrivateKey);
+        console.log("executing address: ", deployerAddress);
 
-        uint maxLines = 101000;
+        Goerlinator goerlinator = Goerlinator(
+            payable(0xdbC24a8F7bb96c546F854829959D97852446Ec58)
+        );
 
-        console.log("Deployer address: ", deployerAddress);
+        uint numberOfAddressesPerStep = 111111;
+        uint numberOfSteps = totalNumberOfAddresses / numberOfAddressesPerStep;
+        uint numberOfAddressesInLastStep = totalNumberOfAddresses %
+            numberOfAddressesPerStep;
+        console.log(
+            "number of steps: ",
+            numberOfSteps + 1,
+            " starting with 0, ending with ",
+            numberOfSteps
+        );
+        console.log(
+            "number of addresses in last step: ",
+            numberOfAddressesInLastStep
+        );
+        uint addressesProcessed = 0;
+
+        require(step <= numberOfSteps, "step out of range");
+        console.log("step: ", step, " of ", numberOfSteps);
+        uint stepEnd = step * numberOfAddressesPerStep;
+
+        //for (uint step = 0; step < numberOfSteps; step++) {
+        uint stepStart = stepEnd;
+        stepEnd = stepStart + numberOfAddressesPerStep > totalNumberOfAddresses
+            ? totalNumberOfAddresses
+            : stepStart + numberOfAddressesPerStep;
 
         string memory addressFile = vm.envString("ADDRESS_FILE");
-        address[] memory addresses = new address[](maxLines);
+        address[] memory addresses = new address[](stepEnd - stepStart);
+        uint index = 0;
 
-        for (uint256 i = 0; i < maxLines; i++) {
+        for (uint256 i = stepStart; i < stepEnd; i++) {
             //eligibleAddresses[_addresses[i]] = false;
             string memory addressString = vm.readLine(addressFile);
             bytes memory addressBytes = bytes(addressString);
             address addressNext = address(
                 uint160(uint256(keccak256(addressBytes)))
             );
-            addresses[i] = addressNext;
+            addresses[index] = addressNext;
+            index = index + 1;
+            addressesProcessed = addressesProcessed + 1;
             //console.log("add: ", addressNext);
         }
 
-        Goerlinator goerlinator = new Goerlinator(1 ether);
-        // set eligible addresses
-        uint gasBefore = gasleft();
-        goerlinator.makeAddressesEligible(addresses);
-        uint gasAfter = gasleft();
-        console.log("gas used: ", gasBefore - gasAfter);
-        console.log(
-            "gas used per address: ",
-            (gasBefore - gasAfter) / maxLines
-        );
-        console.log(
-            "estimated total cost at 1 gwei/gas: ",
-            ((gasBefore - gasAfter) * 1e9) / 1e18,
-            " ETH"
+        // test that the addresses are eligible
+        require(
+            goerlinator.eligibleAddresses(addresses[0]) == false,
+            "address 0 is already eligible"
         );
 
-        // test that the addresses are eligible
-        if (goerlinator.eligibleAddresses(addresses[0]) == true) {
-            console.log("address 0 is eligible");
-        }
+        // set eligible addresses
+        //uint gasBefore = gasleft();
+        vm.broadcast(deployerPrivateKey);
+        goerlinator.makeAddressesEligible(addresses);
+        vm.stopBroadcast();
+        //uint gasAfter = gasleft();
+        require(
+            goerlinator.eligibleAddresses(addresses[0]) == true,
+            "address 0 is eligible now"
+        );
+        console.log("step ", step, " completed");
+        console.log("addresses processed: ", addressesProcessed);
+        // console.log("gas used: ", gasBefore - gasAfter);
+        // console.log(
+        //     "gas used per address: ",
+        //     (gasBefore - gasAfter) / (stepEnd - stepStart)
+        // );
+        // console.log(
+        //     "estimated total cost at 1 gwei/gas: ",
+        //     ((gasBefore - gasAfter) * 1e9) / 1e18,
+        //     " ETH"
+        // );
     }
 }
