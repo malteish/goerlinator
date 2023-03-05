@@ -11,7 +11,8 @@ const Home: NextPage = () => {
         <h1 className={styles.title}>This address already got their share.</h1>
         <br />
         <div className={styles.description2}>
-          The address has already claimed GoerliETH and is not eligible for another claim.
+          The address has already claimed GoerliETH and is not eligible for
+          another claim.
         </div>
         <br />
         <br />
