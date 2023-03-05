@@ -23,23 +23,12 @@ _Ideally use the UI for collection, but if you'd like to use cmd, run the comman
 
 `ts-node ./scripts/collect.ts --pk=<collection private key> --rpc=<rpc for relevant chain> --contract_address=<Collector contract address> --leaves_file=<Merkle tree leaves file path>`
 
-## Deploy (using gcloud KMS)
-
-1. Set up environment variables for:
-   - `ALCHEMY_API_KEY`
-   - `GOOGLE_APPLICATION_CREDENTIALS` ([details](https://cloud.google.com/docs/authentication/application-default-credentials#GAC))
-   - `KMS_PROJECT_ID`
-   - `KMS_LOCATION_ID`
-   - `KMS_KEYRING_ID`
-   - `KMS_KEY_ID`
-   - `KMS_KEY_VERSION`
-2. `ts-node ./scripts/deploy-kms.ts --network=goerli --amount=10000000000 --leaves_file=./data/mt.txt`
-
-There are two optional cmd flags: `graffiti` / `recipient`
-
 ## Deploy (using local private key)
 
-`npx ts-node scripts/deploy-goerlinator.ts --network=goerli --amount="50.0" --leaves_file=data/poapHoldersBefore2023-03-01.csv`
+`npx ts-node scripts/deploy.ts --network=goerli --amount="50.0" --leaves_file=data/big-local-mt.txt`
+
+Deploy to local chain:
+`npx ts-node scripts/deploy.ts --network=anvil8501 --amount="50.0" --leaves_file=data/big-local-mt.txt`
 
 ## Dev workflow (UI testing)
 
