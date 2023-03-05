@@ -95,6 +95,7 @@ export default function handler(
   });
 
   let addressesArray = readFileSync(fullPath).toString().split(",");
+  console.log("Loaded file: ", addressesArray.length, " addresses.");
   if (!addressesArray.includes(address)) {
     return res
       .status(400)
