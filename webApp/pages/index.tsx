@@ -55,7 +55,7 @@ const Home: NextPage = () => {
 
   //   if (eligibleAddresses.includes(address)) {
   //     router.push('/Claimed');
-  //   } 
+  //   }
   //   else if (eligibleAddresses.includes(address) {
   //     router.push('/Claimed_Before');
   //   }
@@ -63,6 +63,9 @@ const Home: NextPage = () => {
   //     router.push('/Declined');
   //   }
   // }
+
+  const inputRef = React.useRef(null);
+  const [loading, setLoading] = React.useState(false);
 
   return (
     <div className={styles.container}>
@@ -74,26 +77,63 @@ const Home: NextPage = () => {
         />
         <link href="/favicon.ico" rel="icon" />
       </Head>
-      
+
       <main className={styles.main}>
         <h1 className={styles.title}>GOERLINATOR</h1>
-        <h2 className={styles.description}>terminating your GoerliETH shortage</h2>
-        <img className={styles.goerlinator} src="/goerlinator_talking.png"></img>
+        <h2 className={styles.description}>
+          terminating your GoerliETH shortage
+        </h2>
+        <img
+          className={styles.goerlinator}
+          src="/goerlinator_talking.png"
+        ></img>
         {/* <ConnectButton /> */}
         <div className={styles.box}>
-   				 Addresses that had at least one POAP until February 28, 2023 are eligible for a one-time 1 GoerliETH claim.
+          Addresses that had at least one POAP until February 28, 2023 are
+          eligible for a one-time 1 GoerliETH claim.
         </div>
+        {loading && <div>Loading ...</div>}
         <div className={styles.flexBox}>
-        <div className={styles.description2}>
-        Claim with address:
-        </div>
-        <form action="/api/claim" method="post">
+          <div className={styles.description2}>Claim with address:</div>
+          <div className={styles.inputContainer}>
+            <label>address: </label>
+            <input type="text" id="address" name="address" ref={inputRef} />
+            <button
+              className={styles.formButton}
+              type="submit"
+              disabled={loading || (inputRef.current as any)?.value === ""}
+              onClick={async () => {
+                setLoading(true);
+                try {
+                  const response = await fetch("/api/claim", {
+                    method: "POST",
+                    body: JSON.stringify({
+                      address: (inputRef.current as any)?.value,
+                    }),
+                  });
+                  const resJson = await response.json();
+                  if (resJson.error) {
+                    throw new Error(resJson.error);
+                  }
+                  Router.push("/Claimed");
+                } catch (e) {
+                  console.error(e);
+                  Router.push("/Declined");
+                } finally {
+                  setLoading(false);
+                }
+              }}
+            >
+              Claim
+            </button>
+          </div>
+          {/* <form action="/api/claim" method="post">
           <div className={styles.inputContainer}>
           <label>address:  </label>
           <input type="text" id="address" name="address" />
           <button className={styles.formButton} type="submit">Claim</button>
           </div>
-        </form>
+        </form> */}
         </div>
       </main>
 
@@ -109,7 +149,5 @@ const Home: NextPage = () => {
     </div>
   );
 };
-
-
 
 export default Home;
