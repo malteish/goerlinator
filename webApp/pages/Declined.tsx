@@ -1,6 +1,6 @@
 import styles from "../styles/Home.module.css";
 import React from "react";
-import Form from "../components/ProofGenerator";
+import ProofGenerator from "../components/ProofGenerator";
 import type { NextPage } from "next";
 // import Router, { useRouter } from "next/router";
 
@@ -19,7 +19,7 @@ const Home: NextPage = () => {
         <br />
         <br />
         <br />
-        <Form />
+        <ProofGenerator />
       </main>
     </div>
   );

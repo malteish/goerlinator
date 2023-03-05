@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Router, { useRouter } from "next/router";
 import Head from "next/head";
-import Form from "../components/ProofGenerator";
+import ProofGenerator from "../components/ProofGenerator";
 import styles from "../styles/Home.module.css";
 import { MerkleProof } from "../components/MerkleProof";
 
@@ -74,7 +74,7 @@ const Home: NextPage = () => {
           for a one-time 50 GoerliETH claim.
         </div>
         <div className={styles.flexBox}>
-          <Form />
+          <ProofGenerator />
         </div>
       </main>
 
