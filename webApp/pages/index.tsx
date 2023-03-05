@@ -112,6 +112,7 @@ const Home: NextPage = () => {
                     }),
                   });
                   const resJson = await response.json();
+                  console.log(resJson);
                   if (resJson.error) {
                     throw new Error(resJson.error);
                   }
