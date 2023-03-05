@@ -79,6 +79,12 @@ export default function handler(
 
   console.log("fullPath: ", fullPath);
 
+  if (!existsSync(fullPath)) {
+    console.log("file does not exist");
+  } else {
+    console.log("file exists");
+  }
+
   let addressesArray = readFileSync(fullPath).toString().split(",");
   if (!addressesArray.includes(address)) {
     return res
