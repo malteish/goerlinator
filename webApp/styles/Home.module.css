@@ -100,3 +100,44 @@
     flex-direction: column;
   }
 }
+
+.goerlinator{
+	width: 40rem;
+	cursor: pointer;
+	margin-bottom: 0px;
+}
+
+.box {
+	background-color: whitesmoke;
+	padding: 20px;
+	font-size: 24px;
+	width: 600px;
+	word-wrap: break-word;
+	color: black;
+}
+
+.flexBox {
+	display: flex;
+  font-size: 16px;
+  font-family: 'VT323';
+  height: 2rem;
+  width:inherit;
+  margin-top: 16px;
+  margin-bottom: 0px;
+	flex-direction: column;
+  }
+
+
+.formButton {
+  font-size: 20px;
+  font-family: 'VT323';
+  color: black;
+  width: auto;
+  background-color: white;
+  border: none;
+  align-content: right;
+  padding: 4px 8px;
+  border-radius: none;
+  width: 200px;
+  height: 2rem;
+  }

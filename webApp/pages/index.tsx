@@ -55,13 +55,19 @@ const Home: NextPage = () => {
 
       <main className={styles.main}>
         <h1 className={styles.title}>The Goerlinator</h1>
+        <h2 className={styles.description}>terminating your GoerliETH shortage</h2>
+        <img className={styles.goerlinator} src="/goerlinator_talking.png"></img>
         {/* <ConnectButton /> */}
-
+        <div className={styles.box}>
+   				 Addresses that had at least one POAP until February 28, 2023 are eligible for a one-time 1 GoerliETH claim.
+        </div>
+        <div className={styles.flexBox}>
         <form action="/api/claim" method="post">
-          <label>address</label>
+          <label>address: </label>
           <input type="text" id="address" name="address" />
-          <button type="submit">Submit</button>
+          <button type="submit">Claim</button>
         </form>
+        </div>
       </main>
 
       <footer className={styles.footer}>
