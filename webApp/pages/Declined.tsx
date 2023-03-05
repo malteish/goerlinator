@@ -11,7 +11,7 @@ const Home: NextPage = () => {
         <h1 className={styles.title}>Goerlinator denied your claim.</h1>
         <br />
         <div className={styles.description2}>
-          The address isn't on the list.
+        The address is not on the list.
         </div>
         <br />
         <br />
