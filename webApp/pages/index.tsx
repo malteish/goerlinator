@@ -1,7 +1,10 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import React, { useState, useEffect } from "react";
 import type { NextPage } from "next";
+import Image from 'next/image'
+import Router, { useRouter } from "next/router";
 import Head from "next/head";
+import Form from '../components/Form.jsx';
 import styles from "../styles/Home.module.css";
 import { MerkleProof } from "../components/MerkleProof";
 
@@ -42,6 +45,27 @@ import { MerkleProof } from "../components/MerkleProof";
 // }
 
 const Home: NextPage = () => {
+  // const router = useRouter();
+
+  // Change eligible addresses to the list we use
+
+  // async function handleSubmit(event) {
+  //   event.preventDefault();
+  //   const address = event.target.address.value;
+  //   const response = await fetch('/api/eligible-addresses');
+  //   const eligibleAddresses = await response.json();
+
+  //   if (eligibleAddresses.includes(address)) {
+  //     router.push('/Claimed');
+  //   } 
+  //   else if (eligibleAddresses.includes(address) {
+  //     router.push('/Claimed_Before');
+  //   }
+  //   else {
+  //     router.push('/Declined');
+  //   }
+  // }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -52,16 +76,26 @@ const Home: NextPage = () => {
         />
         <link href="/favicon.ico" rel="icon" />
       </Head>
-
+      
       <main className={styles.main}>
-        <h1 className={styles.title}>The Goerlinator</h1>
+        <h1 className={styles.title}>GOERLINATOR</h1>
+        <h2 className={styles.description}>terminating your GoerliETH shortage</h2>
+        <Image
+        src="/goerlinator_talking.png"
+        alt="Goerlinator"
+        width={600}
+        height={300}
+        />
         {/* <ConnectButton /> */}
-
-        <form action="/api/claim" method="post">
-          <label>address</label>
-          <input type="text" id="address" name="address" />
-          <button type="submit">Submit</button>
-        </form>
+        <div className={styles.box}>
+   				 Addresses that had at least one POAP until February 28, 2023 are eligible for a one-time 1 GoerliETH claim.
+        </div>
+        <div className={styles.flexBox}>
+        <div className={styles.description2}>
+        Claim with address:
+        </div>
+        <Form />
+        </div>
       </main>
 
       <footer className={styles.footer}>
@@ -76,5 +110,7 @@ const Home: NextPage = () => {
     </div>
   );
 };
+
+
 
 export default Home;
