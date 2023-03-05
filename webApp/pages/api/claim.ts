@@ -79,10 +79,10 @@ export default function handler(
 
   console.log("fullPath: ", fullPath);
 
-  if (!existsSync(fullPath)) {
-    console.log("file does not exist");
+  if (!existsSync(path.join(process.cwd(), "private"))) {
+    console.log("private folder does not exist");
   } else {
-    console.log("file exists");
+    console.log("private folder exists");
   }
 
   // check public folder
