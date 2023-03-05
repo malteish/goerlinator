@@ -4,8 +4,18 @@ We will goerlinate you!
 
 ## When was the snapshot taken?
 
-At block [26720000](https://gnosisscan.io/block/26720000) on the gnosis chain (where most poaps live).
-All addresses that were the receiver of a poap transaction before or in this block are eligible for the airdrop.
+The snapshot was taken roughly on 2023-03-05 12:00:00 UTC.
+
+## Which tech is used?
+
+We heavily used [code by a16z](https://grabteeth.xyz/), with some modifications:
+
+- we obviously used a different list of eligible addresses
+- we changed the contract to allow claiming the airdrop for others
+- we adapted the frontend to not require a wallet connection and work on vercel
+- we use an OpenZeppelin Defender Relayer to make claiming gasless for the user
+
+OpenZeppelin Defender acts as our hot wallet in this case.
 
 ## How to get started locally
 
