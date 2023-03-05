@@ -26,6 +26,7 @@
   justify-content: center;
   align-items: center;
   flex-grow: 1;
+
 }
 
 .title a {
@@ -40,12 +41,12 @@
 }
 
 .title {
-  margin: 3rem 0;
+  margin: 0px;
   line-height: 1;
-  font-size: 2.5rem;
+  font-size: 3.7rem;
+  
 }
 
-.title,
 .description {
   text-align: center;
 }
@@ -54,6 +55,13 @@
   margin: 0 0 2rem;
   line-height: 1.5;
   font-size: 1.5rem;
+}
+
+.description2 {
+  text-align: center;
+  line-height: 1.5;
+  font-size: 1.5rem;
+  margin: 0px;
 }
 
 .grid {
@@ -108,8 +116,10 @@
 }
 
 .box {
-	background-color: whitesmoke;
+	display:flex;
+  background-color: whitesmoke;
 	padding: 20px;
+  margin: top 0px;
 	font-size: 24px;
 	width: 600px;
 	word-wrap: break-word;
@@ -127,17 +137,33 @@
 	flex-direction: column;
   }
 
+.inputContainer {
+  display: flex;
+  align-items: center;
+  padding: 4px 8px;
+  margin-bottom: 0px;
+  width:500px;
+  }
+  
+.inputContainer input {
+font-size: 16px;
+font-family: 'VT323';
+height: 2rem;
+width:inherit;
+margin-bottom: 0px;
+  }
+
 
 .formButton {
   font-size: 20px;
   font-family: 'VT323';
   color: black;
   width: auto;
-  background-color: white;
+  background-color: whitesmoke;
   border: none;
   align-content: right;
   padding: 4px 8px;
   border-radius: none;
-  width: 200px;
+  width: 100px;
   height: 2rem;
   }
