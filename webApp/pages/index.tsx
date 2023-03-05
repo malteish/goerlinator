@@ -72,7 +72,7 @@ const Home: NextPage = () => {
       <Head>
         <title>The Goerlinator</title>
         <meta
-          content="The Goerlinator distributes goerli eth to the masses"
+          content="The Goerlinator distributes GoerliETH to the masses"
           name="description"
         />
         <link href="/favicon.ico" rel="icon" />
