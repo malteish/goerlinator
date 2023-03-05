@@ -1,5 +1,5 @@
 import React from "react";
-import Router, { useRouter } from "next/router";
+import Router from "next/router";
 import styles from "../styles/Home.module.css";
 
 export default function Form() {

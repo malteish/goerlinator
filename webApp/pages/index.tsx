@@ -2,11 +2,9 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import React, { useState, useEffect } from "react";
 import type { NextPage } from "next";
 import Image from "next/image";
-import Router, { useRouter } from "next/router";
 import Head from "next/head";
-import Form from "../components/Form.tsx";
+import Form from "../components/Form";
 import styles from "../styles/Home.module.css";
-import { MerkleProof } from "../components/MerkleProof";
 
 // function generateMerkleProof(address: string) {
 //   let [leaves, setLeaves] = useState([] as string[]);
