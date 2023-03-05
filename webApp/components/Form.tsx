@@ -36,9 +36,19 @@ export default function Form() {
                   address: (inputRef.current as any)?.value,
                 }),
               });
-              const resJson = await response.json();
-              console.log(resJson);
-              Router.push("considered");
+              if (response.status === 200) {
+                Router.push("claimed");
+              } else if (response.status === 400) {
+                Router.push("declined");
+              } else if (response.status === 500) {
+                Router.push("error");
+              } else {
+                Router.push("considered");
+              }
+
+              // const resJson = await response.json();
+              // console.log(resJson);
+              // Router.push("considered");
               // if (resJson.error) {
               //   throw new Error(resJson.error);
               // }
