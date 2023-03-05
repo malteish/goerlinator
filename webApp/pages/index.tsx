@@ -46,27 +46,6 @@ import { MerkleProof } from "../components/MerkleProof";
 // }
 
 const Home: NextPage = () => {
-  // const router = useRouter();
-
-  // Change eligible addresses to the list we use
-
-  // async function handleSubmit(event) {
-  //   event.preventDefault();
-  //   const address = event.target.address.value;
-  //   const response = await fetch('/api/eligible-addresses');
-  //   const eligibleAddresses = await response.json();
-
-  //   if (eligibleAddresses.includes(address)) {
-  //     router.push('/Claimed');
-  //   } 
-  //   else if (eligibleAddresses.includes(address) {
-  //     router.push('/Claimed_Before');
-  //   }
-  //   else {
-  //     router.push('/Declined');
-  //   }
-  // }
-
   return (
     <div className={styles.container}>
       <Head>
