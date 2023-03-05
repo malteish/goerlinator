@@ -1,10 +1,12 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import React, { useState, useEffect } from "react";
 import type { NextPage } from "next";
-import Image from "next/image";
+import Image from 'next/image'
+import Router, { useRouter } from "next/router";
 import Head from "next/head";
-import Form from "../components/Form";
+import Form from '../components/Form';
 import styles from "../styles/Home.module.css";
+import { MerkleProof } from "../components/MerkleProof";
 
 // function generateMerkleProof(address: string) {
 //   let [leaves, setLeaves] = useState([] as string[]);
@@ -55,7 +57,7 @@ const Home: NextPage = () => {
 
   //   if (eligibleAddresses.includes(address)) {
   //     router.push('/Claimed');
-  //   }
+  //   } 
   //   else if (eligibleAddresses.includes(address) {
   //     router.push('/Claimed_Before');
   //   }
@@ -74,37 +76,30 @@ const Home: NextPage = () => {
         />
         <link href="/favicon.ico" rel="icon" />
       </Head>
-
+      
       <main className={styles.main}>
         <h1 className={styles.title}>GOERLINATOR</h1>
-        <h2 className={styles.description}>
-          terminating your GoerliETH shortage
-        </h2>
-        <img
-          className={styles.goerlinator}
-          src="/goerlinator_talking.png"
-        ></img>
-        <h2 className={styles.description}>
-          terminating your GoerliETH shortage
-        </h2>
+        <h2 className={styles.description}>terminating your GoerliETH shortage</h2>
         <Image
-          src="/goerlinator_talking.png"
-          alt="Goerlinator"
-          width={600}
-          height={300}
+        src="/goerlinator_talking.png"
+        alt="Goerlinator"
+        width={600}
+        height={300}
         />
         {/* <ConnectButton /> */}
         <div className={styles.box}>
-          Addresses that had at least one POAP until February 28, 2023 are
-          eligible for a one-time 1 GoerliETH claim.
+   				 Addresses that had at least one POAP before March 1, 2023 are eligible for a one-time 50 GoerliETH claim.
         </div>
         <div className={styles.flexBox}>
-          <div className={styles.description2}>Claim with address:</div>
-          <Form />
+        <div className={styles.description2}>
+        Claim with address:
+        </div>
+        <Form />
         </div>
       </main>
 
       <footer className={styles.footer}>
+      <div className={styles.box}>
         <a
           href="https://github.com/malteish/goerlinator"
           rel="noopener noreferrer"
@@ -116,5 +111,7 @@ const Home: NextPage = () => {
     </div>
   );
 };
+
+
 
 export default Home;
