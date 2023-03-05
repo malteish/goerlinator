@@ -77,6 +77,15 @@ export default function handler(
   }
   const fullPath = path.join(process.cwd(), addressFile);
 
+  console.log("fullPath: ", fullPath);
+
+  // check public folder
+  if (!existsSync(path.join(process.cwd(), "public"))) {
+    console.log("public folder does not exist");
+  } else {
+    console.log("public folder exists");
+  }
+
   if (!existsSync(fullPath)) {
     console.log("file does not exist");
   } else {
