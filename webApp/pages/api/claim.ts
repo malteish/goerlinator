@@ -14,7 +14,7 @@ import {
 } from "defender-relay-client/lib/ethers";
 import MerkleTree from "merkletreejs";
 import keccak256 from "keccak256";
-import { existsSync, readFileSync } from "fs";
+import { readdir, readFileSync } from "fs";
 import CollectorAbi from "../../abi/Collector.json";
 import { MerkleProof } from "../../components/MerkleProof";
 
@@ -78,6 +78,21 @@ export default function handler(
   const fullPath = path.join(process.cwd(), addressFile);
 
   console.log("fullPath: ", fullPath);
+
+  console.log("process.cwd(): ", process.cwd());
+  console.log("files in current directory:");
+  readdir(process.cwd(), (err, files) => {
+    files.forEach((file) => {
+      console.log(file);
+    });
+  });
+
+  console.log("files in private directory:");
+  readdir(path.join(process.cwd(), "private"), (err, files) => {
+    files.forEach((file) => {
+      console.log(file);
+    });
+  });
 
   let addressesArray = readFileSync(fullPath).toString().split(",");
   if (!addressesArray.includes(address)) {
