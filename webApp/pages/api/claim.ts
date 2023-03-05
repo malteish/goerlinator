@@ -77,21 +77,6 @@ export default function handler(
   }
   const fullPath = path.join(process.cwd(), addressFile);
 
-  console.log("fullPath: ", fullPath);
-
-  if (!existsSync(path.join(process.cwd(), "private"))) {
-    console.log("private folder does not exist");
-  } else {
-    console.log("private folder exists");
-  }
-
-  // check public folder
-  if (!existsSync(path.join(process.cwd(), "public"))) {
-    console.log("public folder does not exist");
-  } else {
-    console.log("public folder exists");
-  }
-
   if (!existsSync(fullPath)) {
     console.log("file does not exist");
   } else {
@@ -100,10 +85,13 @@ export default function handler(
 
   let addressesArray = readFileSync(fullPath).toString().split(",");
   if (!addressesArray.includes(address)) {
+    console.log("address not in merkle tree");
     return res
       .status(400)
       .json({ data: `${address} is not in the merkle tree` });
   }
+
+  console.log("address in merkle tree");
 
   // generate merkle proof
   let [proof, root] = generateMerkleProof(address, addressesArray);
@@ -145,18 +133,17 @@ export default function handler(
       apiKey: process.env.RELAYER_API_KEY!,
       apiSecret: process.env.RELAYER_API_SECRET!,
     };
-
-    console.log("credentials: ", credentials);
-
     provider = new DefenderRelayProvider(credentials);
 
     signer = new DefenderRelaySigner(credentials, provider);
   }
+  console.log("created signer");
 
   // create transaction
   if (process.env.COLLECTOR === undefined) {
     return res.status(500).json({ data: "Collector contract address unknown" });
   }
+  console.log("created transaction");
 
   // create contract
   let collector = new Contract(process.env.COLLECTOR, CollectorAbi.abi, signer);
