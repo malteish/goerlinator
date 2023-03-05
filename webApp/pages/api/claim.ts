@@ -45,11 +45,12 @@ export default function handler(
   }
 ) {
   // Get data submitted in request's body.
-  const body = req.body;
+  const body = JSON.parse(req.body);
 
   // Optional logging to see the responses
   // in the command line where next.js app is running.
   console.log("body: ", body);
+  console.log("address: ", body.address);
 
   // Guard clause checks for first and last name,
   // and returns early if they are not found
