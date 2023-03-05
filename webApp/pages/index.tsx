@@ -1,8 +1,10 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import React, { useState, useEffect } from "react";
 import type { NextPage } from "next";
+import Image from 'next/image'
 import Router, { useRouter } from "next/router";
 import Head from "next/head";
+import Form from '../components/Form.jsx';
 import styles from "../styles/Home.module.css";
 import { MerkleProof } from "../components/MerkleProof";
 
@@ -78,7 +80,12 @@ const Home: NextPage = () => {
       <main className={styles.main}>
         <h1 className={styles.title}>GOERLINATOR</h1>
         <h2 className={styles.description}>terminating your GoerliETH shortage</h2>
-        <img className={styles.goerlinator} src="/goerlinator_talking.png"></img>
+        <Image
+        src="/goerlinator_talking.png"
+        alt="Goerlinator"
+        width={600}
+        height={300}
+        />
         {/* <ConnectButton /> */}
         <div className={styles.box}>
    				 Addresses that had at least one POAP until February 28, 2023 are eligible for a one-time 1 GoerliETH claim.
@@ -87,13 +94,7 @@ const Home: NextPage = () => {
         <div className={styles.description2}>
         Claim with address:
         </div>
-        <form action="/api/claim" method="post">
-          <div className={styles.inputContainer}>
-          <label>address:  </label>
-          <input type="text" id="address" name="address" />
-          <button className={styles.formButton} type="submit">Claim</button>
-          </div>
-        </form>
+        <Form />
         </div>
       </main>
 

@@ -50,7 +50,7 @@ export default function AddressField() {
         e.preventDefault();
         const address = e.target.address.value;
         generateMerkleProof(address);
-    }
+    };
     handleSubmit(event) {
     alert('A name was submitted: ' + this.state.value);
     event.preventDefault();
