@@ -70,7 +70,7 @@ export default function handler(
 
   address = address.toLowerCase();
 
-  // load leaves from file
+  // load leaves from file.
   let addressFile = process.env.ADDRESSES_FILE;
   if (addressFile === undefined) {
     return res.status(500).json({ data: "No leaves file provided" });
