@@ -4,7 +4,7 @@ import type { NextPage } from "next";
 import Image from "next/image";
 import Router, { useRouter } from "next/router";
 import Head from "next/head";
-import Form from "../components/Form.jsx";
+import Form from "../components/Form.tsx";
 import styles from "../styles/Home.module.css";
 import { MerkleProof } from "../components/MerkleProof";
 
@@ -66,9 +66,6 @@ const Home: NextPage = () => {
   //   }
   // }
 
-  const inputRef = React.useRef(null);
-  const [loading, setLoading] = React.useState(false);
-
   return (
     <div className={styles.container}>
       <Head>
@@ -103,7 +100,6 @@ const Home: NextPage = () => {
           Addresses that had at least one POAP until February 28, 2023 are
           eligible for a one-time 1 GoerliETH claim.
         </div>
-        {loading && <div>Loading ...</div>}
         <div className={styles.flexBox}>
           <div className={styles.description2}>Claim with address:</div>
           <Form />
