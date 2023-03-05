@@ -11,7 +11,7 @@ const Home: NextPage = () => {
         <h1 className={styles.title}>Goerlinator denied your claim.</h1>
         <br />
         <div className={styles.description2}>
-          address hasn’t owned any POAPs until 28 February, 2023 and is not
+          This address hasn’t owned any POAPs until 1 March, 2023 and is not
           eligible to claim GoerliETH.
         </div>
         <br />
