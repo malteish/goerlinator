@@ -68,7 +68,10 @@ const Home: NextPage = () => {
         />
         {/* <ConnectButton /> */}
         <div className={styles.box}>
-   				 Addresses that had at least one POAP before March 1, 2023 are eligible for a one-time 50 GoerliETH claim.
+        10,000 addresses that held ETH Denver 2023 tickets are eligible for a one-time 50 GoerliETH claim.
+        <br/>
+        <br/>
+        The amount of GoerliETH in the contract is limited, but we will do our best to refill the funds.
         </div>
         <div className={styles.flexBox}>
         <Form />
