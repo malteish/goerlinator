@@ -7,7 +7,7 @@ import {
   Transaction,
 } from "ethers";
 import path from "path";
-import addresses from "../../private/addresses";
+//import addresses from "../../private/addresses";
 import {
   DefenderRelayProvider,
   DefenderRelaySigner,
@@ -75,8 +75,11 @@ export default function handler(
   if (addressFile === undefined) {
     return res.status(500).json({ data: "No leaves file provided" });
   }
-  //const fullPath = path.join(process.cwd(), addressFile);
-  let addressesArray = addresses.toString().split(",");
+  const fullPath = path.join(process.cwd(), addressFile);
+
+  console.log("fullPath: ", fullPath);
+
+  let addressesArray = readFileSync(fullPath).toString().split(",");
   if (!addressesArray.includes(address)) {
     return res
       .status(400)
