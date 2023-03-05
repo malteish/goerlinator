@@ -1,8 +1,10 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import React, { useState, useEffect } from "react";
 import type { NextPage } from "next";
+import Image from "next/image";
 import Router, { useRouter } from "next/router";
 import Head from "next/head";
+import Form from "../components/Form.jsx";
 import styles from "../styles/Home.module.css";
 import { MerkleProof } from "../components/MerkleProof";
 
@@ -87,6 +89,15 @@ const Home: NextPage = () => {
           className={styles.goerlinator}
           src="/goerlinator_talking.png"
         ></img>
+        <h2 className={styles.description}>
+          terminating your GoerliETH shortage
+        </h2>
+        <Image
+          src="/goerlinator_talking.png"
+          alt="Goerlinator"
+          width={600}
+          height={300}
+        />
         {/* <ConnectButton /> */}
         <div className={styles.box}>
           Addresses that had at least one POAP until February 28, 2023 are
@@ -95,46 +106,7 @@ const Home: NextPage = () => {
         {loading && <div>Loading ...</div>}
         <div className={styles.flexBox}>
           <div className={styles.description2}>Claim with address:</div>
-          <div className={styles.inputContainer}>
-            <label>address: </label>
-            <input type="text" id="address" name="address" ref={inputRef} />
-            <button
-              className={styles.formButton}
-              type="submit"
-              disabled={loading || (inputRef.current as any)?.value === ""}
-              onClick={async () => {
-                setLoading(true);
-                try {
-                  const response = await fetch("/api/claim", {
-                    method: "POST",
-                    body: JSON.stringify({
-                      address: (inputRef.current as any)?.value,
-                    }),
-                  });
-                  const resJson = await response.json();
-                  console.log(resJson);
-                  if (resJson.error) {
-                    throw new Error(resJson.error);
-                  }
-                  Router.push("/Claimed");
-                } catch (e) {
-                  console.error(e);
-                  Router.push("/Declined");
-                } finally {
-                  setLoading(false);
-                }
-              }}
-            >
-              Claim
-            </button>
-          </div>
-          {/* <form action="/api/claim" method="post">
-          <div className={styles.inputContainer}>
-          <label>address:  </label>
-          <input type="text" id="address" name="address" />
-          <button className={styles.formButton} type="submit">Claim</button>
-          </div>
-        </form> */}
+          <Form />
         </div>
       </main>
 

@@ -109,12 +109,6 @@
   }
 }
 
-.goerlinator{
-	width: 40rem;
-	cursor: pointer;
-	margin-bottom: 0px;
-}
-
 .box {
 	display:flex;
   background-color: whitesmoke;

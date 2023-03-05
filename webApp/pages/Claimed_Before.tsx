@@ -1,5 +1,6 @@
 import styles from "../styles/Home.module.css";
 import React from "react";
+import Form from '../components/Form.jsx';
 import type { NextPage } from "next";
 // import Router, { useRouter } from "next/router";
 
@@ -17,14 +18,7 @@ const Home: NextPage = () => {
 			<br />
 			<br />
 			<br />
-			<div className={styles.description2}>Try another address:</div>
-			<form action="/api/claim" method="post">
-          <div className={styles.inputContainer}>
-          <label>address:  </label>
-          <input type="text" id="address" name="address" />
-          <button className={styles.formButton} type="submit">Claim</button>
-          </div>
-        </form>
+            <Form />
         </main>
         </div>
        
