@@ -6,6 +6,7 @@ sed 's/"},{"to":"/\n/g' export.csv > intermediate.csv
 sed 's/"},{"to":"/,/g' export.csv > intermediate.csv
 tr '\n' ',' < input.csv > output.csv
 tr -cd 'x' < input.csv | wc -c
+sed -E 's/,$//' clean > very_clean
 ```
 
 delete ugly stuff in first and last line manually

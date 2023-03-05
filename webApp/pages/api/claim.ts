@@ -30,7 +30,7 @@ function generateMerkleProof(address: string, leaves: string[]): [any, string] {
   let root = merkleTree.getHexRoot();
   console.log("Validating merkle tree...");
   console.log(`Merkle root: ${root}`);
-  let proof = merkleTree.getProof(keccak256(address));
+  let proof = merkleTree.getHexProof(keccak256(address));
   //console.log(`Proof: ${proof}`);
 
   return [proof, root];
@@ -142,31 +142,10 @@ export default function handler(
   // create contract
   let collector = new Contract(process.env.COLLECTOR, CollectorAbi.abi, signer);
 
-  // TODO: fix this!
-  // // collect
-  // collector
-  //   .collect(proof, "", address)
-  //   .then((txObj: Transaction) => {
-  //     console.log("txHash: ", txObj.hash);
-  //     // Sends a HTTP success code
-  //     res.status(200).json({
-  //       data: `Claim transaction has been sent to the mempool for address ${address}. You can check the status of the transaction here: https://goerli.etherscan.io/tx/${txObj.hash}`,
-  //       hash: txObj.hash,
-  //     });
-  //   })
-  //   .catch((err: Error) => {
-  //     console.log("err: ", err);
-  //     res.status(500).json({ data: err });
-  //   });
-
-  // for dev only: send some eth to the address
-  let tx = {
-    to: address,
-    value: utils.parseEther("0.42"),
-  };
-  signer
-    .sendTransaction(tx)
-    .then((txObj) => {
+  // collect
+  collector
+    .collect(proof, "", address)
+    .then((txObj: Transaction) => {
       console.log("txHash: ", txObj.hash);
       // Sends a HTTP success code
       res.status(200).json({
@@ -174,8 +153,28 @@ export default function handler(
         hash: txObj.hash,
       });
     })
-    .catch((err) => {
+    .catch((err: Error) => {
       console.log("err: ", err);
       res.status(500).json({ data: err });
     });
+
+  // // for dev only: send some eth to the address
+  // let tx = {
+  //   to: address,
+  //   value: utils.parseEther("0.42"),
+  // };
+  // signer
+  //   .sendTransaction(tx)
+  //   .then((txObj) => {
+  //     console.log("txHash: ", txObj.hash);
+  //     // Sends a HTTP success code
+  //     res.status(200).json({
+  //       data: `Claim transaction has been sent to the mempool for address ${address}. You can check the status of the transaction here: https://goerli.etherscan.io/tx/${txObj.hash}`,
+  //       hash: txObj.hash,
+  //     });
+  //   })
+  //   .catch((err) => {
+  //     console.log("err: ", err);
+  //     res.status(500).json({ data: err });
+  //   });
 }
