@@ -19,7 +19,8 @@ export default function Form() {
     <div>
       <div className={styles.description2}>Claim with address:</div>
       <div className={styles.loading}>
-      {loading && <div>Loading ... (it might take a minute)</div>}</div>
+        {loading && <div>Loading ... (it might take a minute)</div>}
+      </div>
       <div className={styles.inputContainer}>
         <input type="text" id="address" name="address" ref={inputRef} />
         <button
@@ -40,7 +41,11 @@ export default function Form() {
               if (resJson.error) {
                 throw new Error(resJson.error);
               }
-              Router.push("/Claimed");
+              console.log(resJson.data);
+              if (resJson.hash.length > 0) {
+                Router.push("/Claimed");
+              }
+              Router.push("/Declined");
             } catch (e) {
               console.error(e);
               Router.push("/Declined");
