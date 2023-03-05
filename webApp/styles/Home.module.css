@@ -16,8 +16,9 @@
   display: flex;
   flex: 1;
   padding: 2rem 0;
-  border-top: 1px solid #eaeaea;
+  border-top: 1px solid whitesmoke;
   justify-content: center;
+  text-align: center;
   align-items: center;
 }
 
@@ -114,6 +115,7 @@
   background-color: whitesmoke;
 	padding: 20px;
   margin: top 0px;
+  text-align: center;
 	font-size: 24px;
 	width: 600px;
 	word-wrap: break-word;

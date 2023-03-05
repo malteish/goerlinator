@@ -2,6 +2,7 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import React, { useState, useEffect } from "react";
 import type { NextPage } from "next";
 import Image from 'next/image'
+import Link from "next/link"
 import Router, { useRouter } from "next/router";
 import Head from "next/head";
 import Form from '../components/Form';
@@ -91,22 +92,50 @@ const Home: NextPage = () => {
    				 Addresses that had at least one POAP before March 1, 2023 are eligible for a one-time 50 GoerliETH claim.
         </div>
         <div className={styles.flexBox}>
-        <div className={styles.description2}>
-        Claim with address:
-        </div>
         <Form />
         </div>
       </main>
 
       <footer className={styles.footer}>
-      <div className={styles.box}>
-        <a
-          href="https://github.com/malteish/goerlinator"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          Made with ❤️ by M&M
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+      <Link href="https://github.com/malteish/goerlinator">
+        <a>
+        <Image
+        src="/github-logo-white.png"
+        alt="github-logo"
+        width="50"
+        height="50"
+        />
         </a>
+      </Link>
+      </div>
+      <div className={styles.container}>
+        GoerliETH funded by:  <a href="https://twitter.com/MPtherealmvp" rel="noopener noreferrer" target="_blank">Maria Paula
+        </a>
+        <br />
+          Project created by: <a
+          href="https://twitter.com/malteish"
+          rel="noopener noreferrer"
+          target="_blank">Malteish
+        </a>
+          & 
+       <a
+          href="https://twitter.com/MacBudkowski"
+          rel="noopener noreferrer"
+          target="_blank">Mac
+        </a>
+        <br />
+          Inspired by: <a
+          href="https://grabteeth.xyz/"
+          rel="noopener noreferrer"
+          target="_blank">grabteeth
+        </a>
+        </div>
       </footer>
     </div>
   );
