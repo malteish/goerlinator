@@ -101,9 +101,12 @@ export default function handler(
       .status(400)
       .json({ data: `${address} is not in the merkle tree` });
   }
-
+  console.log("Address found in array.");
   // generate merkle proof
   let [proof, root] = generateMerkleProof(address, addressesArray);
+  console.log("Merkle proof generated.");
+  console.log("proof: ", proof);
+  console.log("root: ", root);
 
   // create signer
   let provider: providers.Provider;
