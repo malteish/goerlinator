@@ -14,7 +14,7 @@ import {
 } from "defender-relay-client/lib/ethers";
 import MerkleTree from "merkletreejs";
 import keccak256 from "keccak256";
-import { existsSync, readFileSync } from "fs";
+import { readdir, readFileSync } from "fs";
 import CollectorAbi from "../../abi/Collector.json";
 import { MerkleProof } from "../../components/MerkleProof";
 
@@ -79,15 +79,34 @@ export default function handler(
 
   console.log("fullPath: ", fullPath);
 
+  console.log("process.cwd(): ", process.cwd());
+  console.log("files in current directory:");
+  readdir(process.cwd(), (err, files) => {
+    files.forEach((file) => {
+      console.log(file);
+    });
+  });
+
+  console.log("files in private directory:");
+  readdir(path.join(process.cwd(), "private"), (err, files) => {
+    files.forEach((file) => {
+      console.log(file);
+    });
+  });
+
   let addressesArray = readFileSync(fullPath).toString().split(",");
+  console.log("Loaded file: ", addressesArray.length, " addresses.");
   if (!addressesArray.includes(address)) {
     return res
       .status(400)
       .json({ data: `${address} is not in the merkle tree` });
   }
-
+  console.log("Address found in array.");
   // generate merkle proof
   let [proof, root] = generateMerkleProof(address, addressesArray);
+  console.log("Merkle proof generated.");
+  console.log("proof: ", proof);
+  console.log("root: ", root);
 
   // create signer
   let provider: providers.Provider;
