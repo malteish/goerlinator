@@ -38,17 +38,19 @@ export default function Form() {
               });
               const resJson = await response.json();
               console.log(resJson);
-              if (resJson.error) {
-                throw new Error(resJson.error);
-              }
-              console.log(resJson.data);
-              if (resJson.hash.length > 0) {
-                Router.push("/Claimed");
-              }
-              Router.push("/Declined");
+              Router.push("considered");
+              // if (resJson.error) {
+              //   throw new Error(resJson.error);
+              // }
+              // console.log(resJson.data);
+              // Router.push("considered");
+              // if (resJson.hash.length > 0) {
+              //   Router.push("/Claimed");
+              // }
+              // Router.push("/Declined");
             } catch (e) {
               console.error(e);
-              Router.push("/Declined");
+              Router.push("/error");
             } finally {
               setLoading(false);
             }
