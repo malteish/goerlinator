@@ -17,7 +17,8 @@ export default function Form() {
   const [loading, setLoading] = React.useState(false);
   return (
     <div>
-      <div className={styles.description2}>Claim with address:
+      <div className={styles.description2}>Claim with address:</div>
+      <div className={styles.loading}>
       {loading && <div>Loading .. (it might take a minute)</div>}</div>
       <div className={styles.inputContainer}>
         <label>address: </label>

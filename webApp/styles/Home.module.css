@@ -65,6 +65,14 @@
   margin: 0px;
 }
 
+.loading {
+  text-align: center;
+  line-height: 1.5;
+  font-size: 1.5rem;
+  color:aqua;
+  margin: 0px;
+}
+
 .grid {
   display: flex;
   align-items: center;
