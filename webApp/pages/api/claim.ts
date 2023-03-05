@@ -79,6 +79,12 @@ export default function handler(
 
   console.log("fullPath: ", fullPath);
 
+  if (!existsSync(fullPath)) {
+    console.log("file does not exist");
+  } else {
+    console.log("file exists");
+  }
+
   // check public folder
   if (!existsSync(path.join(process.cwd(), "public"))) {
     console.log("public folder does not exist");
