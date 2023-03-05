@@ -6,6 +6,7 @@ import {
   Contract,
   Transaction,
 } from "ethers";
+import path from "path";
 import {
   DefenderRelayProvider,
   DefenderRelaySigner,
@@ -69,11 +70,12 @@ export default function handler(
   address = address.toLowerCase();
 
   // load leaves from file
-  let path = process.env.ADDRESSES_FILE;
-  if (path === undefined) {
+  let addressFile = process.env.ADDRESSES_FILE;
+  if (addressFile === undefined) {
     return res.status(500).json({ data: "No leaves file provided" });
   }
-  let addresses = readFileSync(path).toString().split(",");
+  const fullPath = path.join(process.cwd(), addressFile);
+  let addresses = readFileSync(fullPath).toString().split(",");
   if (!addresses.includes(address)) {
     return res
       .status(400)
