@@ -7,6 +7,7 @@ import {
   Transaction,
 } from "ethers";
 import path from "path";
+import addresses from "../../private/addresses";
 import {
   DefenderRelayProvider,
   DefenderRelaySigner,
@@ -74,16 +75,16 @@ export default function handler(
   if (addressFile === undefined) {
     return res.status(500).json({ data: "No leaves file provided" });
   }
-  const fullPath = path.join(process.cwd(), addressFile);
-  let addresses = readFileSync(fullPath).toString().split(",");
-  if (!addresses.includes(address)) {
+  //const fullPath = path.join(process.cwd(), addressFile);
+  let addressesArray = addresses.toString().split(",");
+  if (!addressesArray.includes(address)) {
     return res
       .status(400)
       .json({ data: `${address} is not in the merkle tree` });
   }
 
   // generate merkle proof
-  let [proof, root] = generateMerkleProof(address, addresses);
+  let [proof, root] = generateMerkleProof(address, addressesArray);
 
   // create signer
   let provider: providers.Provider;
