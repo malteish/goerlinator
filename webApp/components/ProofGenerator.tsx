@@ -5,20 +5,50 @@ import styles from "../styles/Home.module.css";
 export default function ProofGenerator() {
   const inputRef = React.useRef(null);
   const [loading, setLoading] = React.useState(false);
-  // let [leaves, setLeaves] = useState([] as string[]);
+  const [downloading, setDownloading] = React.useState(true);
+  let [leaves, setLeaves] = React.useState([] as string[]);
+
+  // Get the merkle leaves
+  React.useEffect(() => {
+    fetch("leaves.txt")
+      .then((r) => r.text())
+      .then((text) => {
+        let leaves = text.split(",");
+        setLeaves(leaves);
+      });
+  }, []);
 
   const checkAndGenerateProof = async (address: string) => {
     setLoading(true);
     try {
-      // // Get the merkle leaves
-      // useEffect(() => {
-      //   fetch(CurrentConfig.MerkleTreePath)
-      //     .then((r) => r.text())
-      //     .then((text) => {
-      //       let leaves = text.split(",");
-      //       setLeaves(leaves);
-      //     });
-      // }, []);
+      // const pipeline = promisify(stream.pipeline);
+      // const { filename } = req.query;
+
+      // Download the file from the server
+      // const url = `leaves.txt`;
+      // const fileRes = await fetch(url);
+
+      // if (!fileRes.ok) {
+      //   throw new Error(`unexpected response ${fileRes.statusText}`);
+      // }
+
+      // console.log("File downloaded: ", fileRes);
+      // if (fileRes.body === null) {
+      //   throw new Error(`File body is null`);
+      // }
+      // let leaves = fileRes.body.toString().split(",");
+
+      while (leaves.length === 0) {
+        console.log("Waiting for leaves to load");
+        await new Promise((resolve) => setTimeout(resolve, 10));
+        console.log("Waiting for leaves to load");
+      }
+      console.log("Loaded file: ", leaves.length, " addresses.");
+      if (!leaves.includes(address)) {
+        throw new Error(`Address not found in merkle tree`);
+      }
+
+      console.log("Leaves loaded, starting proof generation");
 
       const response = await fetch("/api/claim", {
         method: "POST",
