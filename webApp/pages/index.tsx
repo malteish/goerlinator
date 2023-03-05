@@ -1,17 +1,45 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import React, { useState, useEffect } from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-import { AddressInputForm } from "../components/addressInput";
+import { MerkleProof } from "../components/MerkleProof";
 
-function validateAddress() {
-  const address = document.querySelector("#address").value;
+// function generateMerkleProof(address: string) {
+//   let [leaves, setLeaves] = useState([] as string[]);
+//   let [calculatingProof, setCalculatingProof] = useState(false);
+//   let [proof, setProof] = useState({} as MerkleProof);
 
-  if (!address) {
-    alert("Please enter your name.");
-    return false;
-  }
-}
+//   // Get the merkle leaves
+//   useEffect(() => {
+//     fetch("public/leaves.txt")
+//       .then((r) => r.text())
+//       .then((text) => {
+//         let leaves = text.split(",");
+//         setLeaves(leaves);
+//       });
+//   }, []);
+
+//   let loadingComplete = leaves.length > 0;
+
+//   // Kick off webworker to calculate proof in background thread
+//   useEffect(() => {
+//     if (
+//       leaves.length > 0 &&
+//       address !== "" &&
+//       !calculatingProof &&
+//       proof.proof === undefined
+//     ) {
+//       setCalculatingProof(true);
+//       let worker = new Worker(new URL("createMerkleProof", import.meta.url));
+//       worker.postMessage({ address: address, leaves: leaves });
+//       worker.onmessage = ({ data: { resultProof } }) => {
+//         setCalculatingProof(false);
+//         setProof(resultProof);
+//       };
+//     }
+//   }, [leaves, address]);
+// }
 
 const Home: NextPage = () => {
   return (
@@ -30,68 +58,19 @@ const Home: NextPage = () => {
         {/* <ConnectButton /> */}
 
         <form action="/api/claim" method="post">
-          <label for="address">address</label>
+          <label>address</label>
           <input type="text" id="address" name="address" />
           <button type="submit">Submit</button>
         </form>
-
-        {/* <h1 className={styles.title}>
-          Welcome to <a href="">RainbowKit</a> + <a href="">wagmi</a> +{' '}
-          <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.tsx</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a className={styles.card} href="https://rainbowkit.com">
-            <h2>RainbowKit Documentation &rarr;</h2>
-            <p>Learn how to customize your wallet connection flow.</p>
-          </a>
-
-          <a className={styles.card} href="https://wagmi.sh">
-            <h2>wagmi Documentation &rarr;</h2>
-            <p>Learn how to interact with Ethereum.</p>
-          </a>
-
-          <a
-            className={styles.card}
-            href="https://github.com/rainbow-me/rainbowkit/tree/main/examples"
-          >
-            <h2>RainbowKit Examples &rarr;</h2>
-            <p>Discover boilerplate example RainbowKit projects.</p>
-          </a>
-
-          <a className={styles.card} href="https://nextjs.org/docs">
-            <h2>Next.js Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a
-            className={styles.card}
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-          >
-            <h2>Next.js Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            className={styles.card}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div> */}
       </main>
 
       <footer className={styles.footer}>
-        <a href="https://rainbow.me" rel="noopener noreferrer" target="_blank">
-          Made with ❤️ by your frens at 🌈
+        <a
+          href="https://github.com/malteish/goerlinator"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          Made with ❤️ by M&M
         </a>
       </footer>
     </div>

@@ -1,8 +1,38 @@
-import { utils, Wallet, providers, Signer } from "ethers";
+import {
+  utils,
+  Wallet,
+  providers,
+  Signer,
+  Contract,
+  Transaction,
+} from "ethers";
 import {
   DefenderRelayProvider,
   DefenderRelaySigner,
 } from "defender-relay-client/lib/ethers";
+import MerkleTree from "merkletreejs";
+import keccak256 from "keccak256";
+import { existsSync, readFileSync } from "fs";
+import CollectorAbi from "../../abi/Collector.json";
+import { MerkleProof } from "../../components/MerkleProof";
+
+function generateMerkleProof(address: string, leaves: string[]): [any, string] {
+  if (leaves.length == 0 || address == "") {
+    throw new Error("Invalid input");
+  }
+
+  let merkleTree = new MerkleTree(leaves, keccak256, {
+    hashLeaves: true,
+    sortPairs: true,
+  });
+  let root = merkleTree.getHexRoot();
+  console.log("Validating merkle tree...");
+  console.log(`Merkle root: ${root}`);
+  let proof = merkleTree.getProof(keccak256(address));
+  //console.log(`Proof: ${proof}`);
+
+  return [proof, root];
+}
 
 export default function handler(
   req: { body: any },
@@ -35,13 +65,25 @@ export default function handler(
       .json({ data: `${address} is not a valid ethereum address` });
   }
 
-  // create transaction
-  let tx = {
-    to: address,
-    value: utils.parseEther("0.33"),
-  };
+  address = address.toLowerCase();
+
+  // load leaves from file
+  let path = process.env.ADDRESSES_FILE;
+  if (path === undefined) {
+    return res.status(500).json({ data: "No leaves file provided" });
+  }
+  let addresses = readFileSync(path).toString().split(",");
+  if (!addresses.includes(address)) {
+    return res
+      .status(400)
+      .json({ data: `${address} is not in the merkle tree` });
+  }
+
+  // generate merkle proof
+  let [proof, root] = generateMerkleProof(address, addresses);
 
   // create signer
+  let provider: providers.Provider;
   let signer: Signer;
 
   if (process.env.NODE_ENV === "development") {
@@ -52,7 +94,7 @@ export default function handler(
     ) {
       return res.status(500).json({ data: "No relayer provided" });
     }
-    let provider = new providers.JsonRpcProvider(process.env.RPC_URL);
+    provider = new providers.JsonRpcProvider(process.env.RPC_URL);
     signer = new Wallet(process.env.PRIVATE_KEY, provider);
 
     // let randomWallet = Wallet.createRandom();
@@ -80,12 +122,41 @@ export default function handler(
 
     console.log("credentials: ", credentials);
 
-    const provider = new DefenderRelayProvider(credentials);
+    provider = new DefenderRelayProvider(credentials);
 
     signer = new DefenderRelaySigner(credentials, provider);
   }
 
-  // send transaction
+  // create transaction
+  if (process.env.COLLECTOR === undefined) {
+    return res.status(500).json({ data: "Collector contract address unknown" });
+  }
+
+  // create contract
+  let collector = new Contract(process.env.COLLECTOR, CollectorAbi.abi, signer);
+
+  // TODO: fix this!
+  // // collect
+  // collector
+  //   .collect(proof, "", address)
+  //   .then((txObj: Transaction) => {
+  //     console.log("txHash: ", txObj.hash);
+  //     // Sends a HTTP success code
+  //     res.status(200).json({
+  //       data: `Claim transaction has been sent to the mempool for address ${address}. You can check the status of the transaction here: https://goerli.etherscan.io/tx/${txObj.hash}`,
+  //       hash: txObj.hash,
+  //     });
+  //   })
+  //   .catch((err: Error) => {
+  //     console.log("err: ", err);
+  //     res.status(500).json({ data: err });
+  //   });
+
+  // for dev only: send some eth to the address
+  let tx = {
+    to: address,
+    value: utils.parseEther("0.42"),
+  };
   signer
     .sendTransaction(tx)
     .then((txObj) => {
@@ -100,6 +171,4 @@ export default function handler(
       console.log("err: ", err);
       res.status(500).json({ data: err });
     });
-
-  // Found the name.
 }

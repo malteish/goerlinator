@@ -25,7 +25,10 @@ _Ideally use the UI for collection, but if you'd like to use cmd, run the comman
 
 ## Deploy (using local private key)
 
-`npx ts-node scripts/deploy-goerlinator.ts --network=goerli --amount="50.0" --leaves_file=data/poapHoldersBefore2023-03-01.csv`
+`npx ts-node scripts/deploy.ts --network=goerli --amount="50.0" --leaves_file=data/big-local-mt.txt`
+
+Deploy to local chain:
+`npx ts-node scripts/deploy.ts --network=anvil8501 --amount="50.0" --leaves_file=data/big-local-mt.txt`
 
 ## Dev workflow (UI testing)
 
