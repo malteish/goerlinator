@@ -21,7 +21,6 @@ export default function Form() {
       <div className={styles.loading}>
       {loading && <div>Loading ... (it might take a minute)</div>}</div>
       <div className={styles.inputContainer}>
-        <label>address: </label>
         <input type="text" id="address" name="address" ref={inputRef} />
         <button
           className={styles.formButton}
