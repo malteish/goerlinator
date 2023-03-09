@@ -1,6 +1,6 @@
 import styles from "../styles/Home.module.css";
 import React from "react";
-import Form from "../components/Form";
+import ClaimForm from "../components/ClaimForm";
 import type { NextPage } from "next";
 // import Router, { useRouter } from "next/router";
 
