@@ -9,7 +9,7 @@ export default function ClaimForm() {
   return (
     <div>
       <div className={styles.description2}>Claim with address (not ENS):</div>
-      <div className={styles.loading}>{message !== "" && message}</div>
+      <div className={styles.loading}>{message != "" && message}</div>
       <div className={styles.inputContainer}>
         <input type="text" id="address" name="address" ref={inputRef} />
         <button
@@ -26,30 +26,31 @@ export default function ClaimForm() {
                 }),
               });
 
+              const responseJson = await response.json();
+              console.log("responseJson: ", responseJson);
+
               if (response.status === 500) {
                 throw new Error(await response.json());
               }
 
-              const responseJson = await response.json();
-              console.log("responseJson: ", responseJson);
+              // all other status codes should come with a data object
               const responseMessage = responseJson.data;
               console.log("response message: ", responseMessage);
               setMessage(responseMessage);
 
+              // if (response.status == 200 && responseJson.txHash != null) {
+              //   const txHash = responseJson.txHash;
+              //   console.log("txHash: ", txHash);
+              //   setMessage("Address is being goerlinated: " + txHash);
+              //   //throw new Error("Something went wrong");
+              // } else {
+
+              // }
+
               // todo: check the response status and choose an appropriate color for the message!
               // if (response.status === 200) {
-              //   Router.push("claimed");
               // } else if (response.status === 400) {
-              //   setMessage(responseMessage);
-              //   // if response.json() {
-              //   //   setMessage(JSON.stringify(response.json()));
-              //   // }
-              //   //setMessage(JSON.stringify(responeJson);
               // } else if (response.status === 500) {
-              //   Router.push("error");
-              // } else {
-              //   Router.push("considered");
-              // }
             } catch (e) {
               console.error(e);
               Router.push("/error");
