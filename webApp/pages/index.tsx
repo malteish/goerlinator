@@ -1,11 +1,11 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import React, { useState, useEffect } from "react";
 import type { NextPage } from "next";
-import Image from 'next/image'
-import Link from "next/link"
+import Image from "next/image";
+import Link from "next/link";
 import Router, { useRouter } from "next/router";
 import Head from "next/head";
-import Form from '../components/Form';
+import ClaimForm from "../components/ClaimForm";
 import styles from "../styles/Home.module.css";
 import { MerkleProof } from "../components/MerkleProof";
 
@@ -56,73 +56,89 @@ const Home: NextPage = () => {
         />
         <link href="/favicon.ico" rel="icon" />
       </Head>
-      
+
       <main className={styles.main}>
         <h1 className={styles.title}>GOERLINATOR</h1>
-        <h2 className={styles.description}>terminating your GoerliETH shortage</h2>
+        <h2 className={styles.description}>
+          terminating your GoerliETH shortage
+        </h2>
         <Image
-        src="/goerlinator_talking.png"
-        alt="Goerlinator"
-        width={600}
-        height={300}
+          src="/goerlinator_talking.png"
+          alt="Goerlinator"
+          width={600}
+          height={300}
         />
         {/* <ConnectButton /> */}
         <div className={styles.box}>
-        10,000 addresses that held ETH Denver 2023 tickets are eligible for a one-time 50 GoerliETH claim.
-        <br/>
-        <br/>
-        The amount of GoerliETH in the contract is limited, but we will do our best to refill the funds.
+          10,000 addresses that held ETH Denver 2023 tickets are eligible for a
+          one-time 50 GoerliETH claim.
+          <br />
+          <br />
+          The amount of GoerliETH in the contract is limited, but we will do our
+          best to refill the funds.
         </div>
         <div className={styles.flexBox}>
-        <Form />
+          <ClaimForm />
         </div>
       </main>
 
       <footer className={styles.footer}>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
-      <Link href="https://github.com/malteish/goerlinator">
-        <a>
-        <Image
-        src="/github-logo-white.png"
-        alt="github-logo"
-        width="50"
-        height="50"
-        />
-        </a>
-      </Link>
-      </div>
-      <div className={styles.container}>
-        GoerliETH funded by:  <a href="https://twitter.com/MPtherealmvp" rel="noopener noreferrer" target="_blank">Maria Paula
-        </a>
-        <br />
-          Project created by: <a
-          href="https://twitter.com/malteish"
-          rel="noopener noreferrer"
-          target="_blank">Malteish
-        </a>
-          & 
-       <a
-          href="https://twitter.com/MacBudkowski"
-          rel="noopener noreferrer"
-          target="_blank">Mac
-        </a>
-        <br />
-          Inspired by: <a
-          href="https://grabteeth.xyz/"
-          rel="noopener noreferrer"
-          target="_blank">grabteeth
-        </a>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <Link href="https://github.com/malteish/goerlinator">
+            <a>
+              <Image
+                src="/github-logo-white.png"
+                alt="github-logo"
+                width="50"
+                height="50"
+              />
+            </a>
+          </Link>
+        </div>
+        <div className={styles.container}>
+          GoerliETH funded by:{" "}
+          <a
+            href="https://twitter.com/MPtherealmvp"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Maria Paula
+          </a>
+          <br />
+          Project created by:{" "}
+          <a
+            href="https://twitter.com/malteish"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Malteish
+          </a>
+          &
+          <a
+            href="https://twitter.com/MacBudkowski"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Mac
+          </a>
+          <br />
+          Inspired by:{" "}
+          <a
+            href="https://grabteeth.xyz/"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            grabteeth
+          </a>
         </div>
       </footer>
     </div>
   );
 };
-
-
 
 export default Home;

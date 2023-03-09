@@ -170,7 +170,7 @@ export default function handler(
       console.log("txHash: ", txObj.hash);
       // Sends a HTTP success code
       res.status(200).json({
-        data: `Claim transaction has been sent to the mempool for address ${address}. You can check the status of the transaction here: https://goerli.etherscan.io/tx/${txObj.hash}`,
+        data: `${address} is being goerlinated: https://goerli.etherscan.io/tx/${txObj.hash}`,
         hash: txObj.hash,
       });
     })
@@ -178,24 +178,4 @@ export default function handler(
       console.log("err: ", err);
       res.status(500).json({ data: err });
     });
-
-  // // for dev only: send some eth to the address
-  // let tx = {
-  //   to: address,
-  //   value: utils.parseEther("0.42"),
-  // };
-  // signer
-  //   .sendTransaction(tx)
-  //   .then((txObj) => {
-  //     console.log("txHash: ", txObj.hash);
-  //     // Sends a HTTP success code
-  //     res.status(200).json({
-  //       data: `Claim transaction has been sent to the mempool for address ${address}. You can check the status of the transaction here: https://goerli.etherscan.io/tx/${txObj.hash}`,
-  //       hash: txObj.hash,
-  //     });
-  //   })
-  //   .catch((err) => {
-  //     console.log("err: ", err);
-  //     res.status(500).json({ data: err });
-  //   });
 }
