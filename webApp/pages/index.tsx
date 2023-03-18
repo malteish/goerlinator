@@ -70,7 +70,7 @@ const Home: NextPage = () => {
         />
         {/* <ConnectButton /> */}
         <div className={styles.box}>
-          10,000 addresses that held ETH Denver 2023 tickets are eligible for a
+          Addresses that held ETH Denver 2023 tickets are eligible for a
           one-time 50 GoerliETH claim.
           <br />
           <br />
