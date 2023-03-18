@@ -7,6 +7,8 @@ sed 's/"},{"to":"/,/g' export.csv > intermediate.csv
 tr '\n' ',' < input.csv > output.csv
 tr -cd 'x' < input.csv | wc -c
 sed -E 's/,$//' clean > very_clean
+# Converts upper to lower case
+$ tr '[:upper:]' '[:lower:]' < input.txt > output.txt
 ```
 
 delete ugly stuff in first and last line manually
