@@ -7,7 +7,7 @@ Thanks to the team at a16z for the original work, I could not have done it witho
 
 ## Deployments
 
-- Goerli: `0xc638f625aC0369d56D55106affbD5b83872Db971`
+- Goerli: `0xa740Dd991655b2887321C71D8Ac0c171a0C9E969`
 
 ## Compile
 
@@ -44,3 +44,12 @@ Deploy to local chain:
 ## Generate tree
 
 - `ts-node ./scripts/generate-tree`
+
+## Update tree and root in contract
+
+- generate new leaves file with addresses. Must be all lowercase.
+- comment out the deploy part in the deploy script to generate root and log it using the deploy command above
+- update the root in the contract through etherscan
+- update the leaves file in frontend
+- deploy new frontend
+- uncomment the deploy script again

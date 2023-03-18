@@ -7,9 +7,11 @@ sed 's/"},{"to":"/,/g' export.csv > intermediate.csv
 tr '\n' ',' < input.csv > output.csv
 tr -cd 'x' < input.csv | wc -c
 sed -E 's/,$//' clean > very_clean
+# Converts upper to lower case
+$ tr '[:upper:]' '[:lower:]' < input.txt > output.txt
 ```
 
 delete ugly stuff in first and last line manually
 
-this didn't actually change the file contents:
+this didn't actually change the file contents much, it seems to sort though:
 npx ts-node ./scripts/generate-tree.ts --in_file=./data/poapHoldersBefore2023-03-01.csv --out_file=./data/merkleTree.txt --num=1106363
