@@ -70,14 +70,14 @@ export async function deploy() {
   console.log("Claim amount: " + amount);
 
   let factory = new ContractFactory(CollectorAbi, CollectorBytecode, signer);
-  // let deploy = await factory.deploy(root, amount);
-  // await deploy.deployTransaction.wait();
-  // console.log(`Deployed to ${deploy.address}`);
-  // console.log(
-  //   `Verify on etherscan: npx hardhat verify --network ${args.network} ${
-  //     deploy.address
-  //   } ${root} ${amount.toString()}`
-  // );
+  let deploy = await factory.deploy(root, amount);
+  await deploy.deployTransaction.wait();
+  console.log(`Deployed to ${deploy.address}`);
+  console.log(
+    `Verify on etherscan: npx hardhat verify --network ${args.network} ${
+      deploy.address
+    } ${root} ${amount.toString()}`
+  );
 }
 
 deploy()

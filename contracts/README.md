@@ -47,8 +47,9 @@ Deploy to local chain:
 
 ## Update tree and root in contract
 
-- generate new leaves file with addresses
+- generate new leaves file with addresses. Must be all lowercase.
 - comment out the deploy part in the deploy script to generate root and log it using the deploy command above
 - update the root in the contract through etherscan
 - update the leaves file in frontend
 - deploy new frontend
+- uncomment the deploy script again
