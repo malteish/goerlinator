@@ -1,52 +1,51 @@
 # Goerlinator
 
-We will goerlinate you!
+A Goerli testnet dusting & airdrop toolkit: batch-send dust to many addresses, collect funds back, and let recipients claim via Merkle-proof gated claims.
 
-## When was the snapshot taken?
+## Target Track
 
-The snapshot was taken roughly on 2023-03-05 12:00:00 UTC.
+**Infrastructure and Scalability**
 
-## Which tech is used?
+## Bounties Targeted
 
-We heavily used [code by a16z](https://grabteeth.xyz/), with some modifications:
+This issue is tracked here so the team can see, at a glance, which bounties the project is pursuing. The OpenZeppelin Defender integration is the primary target.
 
-- we obviously used a different list of eligible addresses
-- we changed the contract to allow claiming the airdrop for others
-- we adapted the frontend to not require a wallet connection and work on vercel
-- we use an OpenZeppelin Defender Relayer to make claiming gasless for the user
+| Bounty | Priority | Status |
+| --- | --- | --- |
+| OpenZeppelin Defender Integration | High | In progress |
+| Best Use of Infura NFT API | Medium | Planned |
+| Chainlink Functions: query API? | Medium | Planned |
+| Deploy a decentralized frontend component for ANY Ethereum project or hack | Medium | Planned |
+| Developer Feature Bonanza (Taho) | Low | Planned |
 
-OpenZeppelin Defender acts as our hot wallet in this case.
+Check items off as they land:
 
-## How to get started locally
+- [ ] OpenZeppelin Defender Integration
+- [ ] Best Use of Infura NFT API
+- [ ] Chainlink Functions: query API
+- [ ] Decentralized frontend component
+- [ ] Developer Feature Bonanza (Taho)
 
-- clone this repo
-- `git submodule update --init --recursive`
-- `npm install`
-- `cd frontend`
-- `npm run dev`
-- go to `localhost:3000` in your browser
+## Project Structure
 
-## Running the smart contract unit tests
+- `contracts/` — Hardhat project with the `Duster` and `Collector` contracts, deploy/collect/withdraw scripts, Merkle tree generation, and KMS signing utilities.
+- `webApp/` — Next.js frontend exposing the claim flow (`/api/claim`) and Merkle proof components.
+
+## Getting Started
+
+### Contracts
 
 ```bash
-cd backend
-source .env
-forge test
+cd contracts
+npm install
+npx hardhat compile
+npx hardhat test
 ```
 
-## Deploying the smart contract
+### Web App
 
 ```bash
-cd backend
-source .env
-forge create --rpc-url $GOERLI_RPC_URL --private-key $PRIVATE_KEY --verify --etherscan-api-key=$ETHERSCAN_API_KEY contracts/Goerlinator.sol:Goerlinator --constructor-args 1ether
+cd webApp
+npm install
+npm run dev
 ```
-
-Remember to change owner if that is what you want.
-
-## Making addresses eligible
-
-- create a list of address that should be eligible, like `backend/data/eligible_addresses.txt`
-- take a deep look at the script `backend/scripts/MakeAddressesEligible.s.sol`
-- adapt it to your needs, especially the `totalNumberOfAddresses` variable
-- with the current, loooong address list, it needs to be executed 10 times while manually updating the `step` variable
