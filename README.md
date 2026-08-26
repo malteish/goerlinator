@@ -1,52 +1,109 @@
 # Goerlinator
 
-We will goerlinate you!
+Automated Goerli testnet interaction toolkit — collect, dust, and manage ETH across multiple wallets via KMS-signed transactions.
 
-## When was the snapshot taken?
+## Overview
 
-The snapshot was taken roughly on 2023-03-05 12:00:00 UTC.
+Goerlinator automates Goerli testnet operations:
+- **Collector** — aggregate funds from multiple wallets into a single address
+- **Duster** — distribute small amounts of ETH across many wallets (for faucet / airdrop prep)
+- **Merkle claims** — generate and verify Merkle trees for claim distribution
+- **KMS signing** — secure transaction signing via AWS KMS
 
-## Which tech is used?
+## Architecture
 
-We heavily used [code by a16z](https://grabteeth.xyz/), with some modifications:
-
-- we obviously used a different list of eligible addresses
-- we changed the contract to allow claiming the airdrop for others
-- we adapted the frontend to not require a wallet connection and work on vercel
-- we use an OpenZeppelin Defender Relayer to make claiming gasless for the user
-
-OpenZeppelin Defender acts as our hot wallet in this case.
-
-## How to get started locally
-
-- clone this repo
-- `git submodule update --init --recursive`
-- `npm install`
-- `cd frontend`
-- `npm run dev`
-- go to `localhost:3000` in your browser
-
-## Running the smart contract unit tests
-
-```bash
-cd backend
-source .env
-forge test
+```
+contracts/          Hardhat project — Solidity contracts, scripts, tests
+  contracts/         Solidity source
+  scripts/           Deployment & automation scripts
+  test/              Mocha / Chai tests
+  utils/             KMS & general utilities
+  typechain-types/   Generated TypeChain bindings
+webApp/             Next.js frontend for Merkle proof claims
 ```
 
-## Deploying the smart contract
+## Quick Start
 
 ```bash
-cd backend
-source .env
-forge create --rpc-url $GOERLI_RPC_URL --private-key $PRIVATE_KEY --verify --etherscan-api-key=$ETHERSCAN_API_KEY contracts/Goerlinator.sol:Goerlinator --constructor-args 1ether
+# Install dependencies
+cd contracts && npm install
+cd ../webApp && npm install
+
+# Configure network
+cp contracts/network-config.example.ts contracts/network-config.ts
+# Edit network-config.ts with your RPC URL and deployer address
+
+# Compile contracts
+cd contracts && npx hardhat compile
+
+# Run tests
+npx hardhat test
+
+# Deploy
+npx ts-node scripts/deploy.ts
 ```
 
-Remember to change owner if that is what you want.
+## Scripts
 
-## Making addresses eligible
+| Script | Description |
+|---|---|
+| `scripts/deploy.ts` | Deploy Collector & Duster |
+| `scripts/deploy-dev-dual.ts` | Deploy to two networks for testing |
+| `scripts/collect.ts` | Collect ETH from multiple wallets |
+| `scripts/duster/deploy.ts` | Deploy Duster contract |
+| `scripts/duster/run.ts` | Execute dusting |
+| `scripts/generate-tree.ts` | Generate Merkle tree from CSV |
+| `scripts/combine-csvs.ts` | Combine multiple CSV inputs |
+| `scripts/reformat-csv.ts` | Reformat CSV to expected schema |
+| `scripts/transfer-kms.ts` | Transfer ETH via KMS-signed tx |
+| `scripts/withdraw-kms.ts` | Withdraw ETH via KMS-signed tx |
+| `scripts/logs.ts` | Fetch and parse event logs |
 
-- create a list of address that should be eligible, like `backend/data/eligible_addresses.txt`
-- take a deep look at the script `backend/scripts/MakeAddressesEligible.s.sol`
-- adapt it to your needs, especially the `totalNumberOfAddresses` variable
-- with the current, loooong address list, it needs to be executed 10 times while manually updating the `step` variable
+## Testing
+
+```bash
+cd contracts
+npx hardhat test
+```
+
+Test files:
+- `test/Duster.spec.ts`
+- `test/Utils.spec.ts`
+- `test/Collector.spec.ts`
+
+---
+
+## Hackathon Track & Bounty Targets
+
+### Track
+**Infrastructure and Scalability**
+
+### Bounties
+
+| Bounty | Status | Notes |
+|---|---|---|
+| Best Use of Infura NFT API | 🎯 Targeted | Potential NFT-based proof-of-participation distribution |
+| Chainlink Functions: query API | 🎯 Targeted | Use Chainlink Functions to query on-chain data for automation triggers |
+| Decentralized Frontend (Ethereum project/hack) | 🎯 Targeted | Deploy webApp frontend via IPFS + ENS for decentralized access |
+| Developer Feature Bonanza (Taho) | 🎯 Targeted | Integrate Taho (formerly Tally Ho) wallet support in webApp claim flow |
+| **OpenZeppelin Defender Integration** | ⭐ Primary target | Use Defender Sentinel for automated monitoring and Relayer for KMS-free tx signing |
+
+### OpenZeppelin Defender Integration — Plan
+
+1. **Sentinel**: Monitor `Collector` and `Duster` contracts for `Withdrawn` / `Dusted` events; alert on anomalies.
+2. **Relayer**: Replace raw KMS signing in `scripts/transfer-kms.ts` and `scripts/withdraw-kms.ts` with OZ Defender Relayer API.
+3. **Autotasks**: Schedule dusting runs and collection sweeps via Defender Autotasks instead of cron/CI.
+4. **Admin**: Use Defender Admin for upgrade management and access control.
+
+#### Integration touchpoints
+
+```
+contracts/utils/defender.ts          (new) — Defender Relayer + Sentinel helpers
+contracts/scripts/transfer-kms.ts     (modify) — optional Defender path
+contracts/scripts/withdraw-kms.ts     (modify) — optional Defender path
+contracts/scripts/duster/run.ts       (modify) — optional Defender Autotask trigger
+```
+
+## License
+
+MIT
